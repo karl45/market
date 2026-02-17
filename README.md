@@ -1,5 +1,7 @@
 # React + TypeScript + Vite
 you need to create .env file in the root of project for server urls !!!!
+
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
