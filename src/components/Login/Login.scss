@@ -1,0 +1,44 @@
+.auth-form-block{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    .inputField{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        input{
+            width: 30%;
+            height: 3vh;
+            font-size: large;
+            border-radius: 10px;
+            padding-inline-start: 10px;
+            border-color: black;
+        }
+
+    }
+
+    .buttonField{
+        button{
+            border: 1px solid black;
+            &:hover{
+                border: 1px solid white;
+                color: white;
+                background-color: black;
+            }
+        }
+
+    }
+
+    .error_section{
+        color: red;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+}

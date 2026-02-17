@@ -1,0 +1,115 @@
+@mixin input-style($width: 30%, $height: 3vh) {
+  width: $width;
+  height: $height;
+  font-size: large;
+  border-radius: 10px;
+  padding-inline-start: 10px;
+  border-color: black;
+}
+
+.product_wrapper {
+  display: flex;
+  flex-direction: column;
+
+  .loading_wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 50%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+  .products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 50px;
+    .product {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .img_card {
+        width: 50%;
+        height: 100%;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
+      .info {
+        display: flex;
+        justify-content: space-between;
+        width: 50%;
+        .title {
+          span {
+            font-size: medium;
+          }
+        }
+        .price {
+          span {
+            font-size: large;
+            font-weight: bold;
+          }
+        }
+      }
+      .delete_button {
+        width: 80%;
+        background-color: green;
+        color: white;
+        &:hover {
+          background-color: white;
+          color: green;
+        }
+      }
+    }
+  }
+
+  .add_button {
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+    .button_text {
+      flex: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .up_wrapper {
+      width: 3%;
+      height: 3%;
+      transition: transform 0.5s ease;
+      transform: rotate(180deg);
+      &.rotated {
+        transform: rotate(0deg);
+      }
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+
+  .add_product_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 20px;
+    .input_name,
+    .input_quantity,
+    .input_price,
+    .input_image {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      input {
+        @include input-style();
+      }
+    }
+  }
+}

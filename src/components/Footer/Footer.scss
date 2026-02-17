@@ -1,0 +1,10 @@
+.footer{
+    background-color: red;
+    flex: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .copyRight{
+        color: white;
+    }
+}
