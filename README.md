@@ -1,4 +1,6 @@
 # React + TypeScript + Vite
+This project is a client for https://github.com/karl45/ProductMinimalApi
+
 you need to create .env file in the root of project for server urls !!!!
 
 
