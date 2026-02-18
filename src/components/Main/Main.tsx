@@ -56,7 +56,7 @@ function Main({ setShowLogout, auth, load }: MainProps) {
       )}
       {!load.getLoading() && (
         <Routes>
-          <Route path="/" element={<Login setShowLogout={setShowLogout} />} />
+          <Route path="/" element={<Login auth={auth} load={load} setShowLogout={setShowLogout} />} />
           <Route
             path="/products"
             element={<Product auth={auth} load={load} />}
