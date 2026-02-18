@@ -23,10 +23,8 @@ function Main({ setShowLogout }: MainProps) {
         if (!res.ok) {
           navigate("/");
         } else {
-          const res = await fetch(`${API_URL}/csrf-token`, {
-            credentials: "include",
-          });
-          const data = await res.json();
+          const csrf = await api.get('/csrf-token');
+          const data = await csrf.json();
           auth.login({
             lpCsrfToken: data.csrfToken,
           });
