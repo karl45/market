@@ -7,32 +7,17 @@ import {
   type PropsWithChildren,
 } from "react";
 import { API_URL } from "../api";
+import type { AuthContextType, LoginContextType } from "../type/types";
 
-export type AuthContextType = {
-  login: ({}: LoginContextType) => void;
-  logout: () => void;
-  productIn: (value: string) => void;
-  isAuth: boolean | null;
-  getlpCsrfToken: () => string | null;
-  getopCsrfToken: () => string | null;
-  refreshAccessToken: () => Promise<string>;
-};
-
-type LoginContextType = {
-  lpCsrfToken: string | null;
-};
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const lpCsrfRef = useRef<string | null>(null);
   const opCsrfRef = useRef<string | null>(null);
-
   const [isAuth, setIsAuth] = useState(false);
 
-  const login = ({
-    lpCsrfToken,
-  }: LoginContextType) => {
+  const login = ({ lpCsrfToken }: LoginContextType) => {
     lpCsrfRef.current = lpCsrfToken;
     setIsAuth(true);
   };
@@ -50,7 +35,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }
 
     const data = await res.json();
-
     setIsAuth(true);
     return data.accessToken;
   };
@@ -80,7 +64,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }),
     [isAuth],
   );
-
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 

@@ -2,51 +2,68 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import Login from "../Login/Login";
 import Product from "../Products/Products";
 import "./Main.scss";
-import { useAuth } from "../../provider/AuthProvider";
 import { useEffect } from "react";
-import { API_URL } from "../../api";
 import { createLoginApiClient } from "../../apiHelper/LoginApiFetch";
+import type { AuthProps, LoadProps } from "../../type/types";
 
-interface MainProps {
+interface MainProps extends LoadProps, AuthProps {
   setShowLogout: (value: boolean) => void;
 }
 
-function Main({ setShowLogout }: MainProps) {
+function Main({ setShowLogout, auth, load }: MainProps) {
   const navigate = useNavigate();
-  const auth = useAuth();
-  const api = createLoginApiClient(auth);
+  const api = createLoginApiClient(auth, load);
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
+        load.loading();
         const res = await api.get("/check");
-        if (!res.ok) {
-          navigate("/");
-        } else {
-          const csrf = await api.get('/csrf-token');
+        if (res.ok) {
+          const csrf = await api.get("/csrf-token");
           const data = await csrf.json();
           auth.login({
             lpCsrfToken: data.csrfToken,
           });
-          navigate("/products");
+          load.loaded();
         }
-      } catch (err) {
-        console.error("Auth check failed", err);
+      } catch (e) {
         auth.logout();
+        load.loaded();
+        navigate("/");
       }
     };
     checkAuth();
   }, []);
 
+  useEffect(() => {
+    if (auth.isAuth) {
+      navigate("/products");
+    } else {
+      navigate("/");
+    }
+  }, [auth.isAuth]);
+
   return (
-    <>
-      <div className="main">
+    <div className="main">
+      {load.getLoading() && (
+        <div className="global_loading_wrapper">
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTu1tHazu6pQAkaHEZaNkssmnPvMaEukaMtRQ&s"
+            alt=""
+          />
+        </div>
+      )}
+      {!load.getLoading() && (
         <Routes>
           <Route path="/" element={<Login setShowLogout={setShowLogout} />} />
-          <Route path="/products" element={<Product />} />
+          <Route
+            path="/products"
+            element={<Product auth={auth} load={load} />}
+          />
         </Routes>
-      </div>
-    </>
+      )}
+    </div>
   );
 }
 

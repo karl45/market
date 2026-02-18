@@ -1,19 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 import "./Products.scss";
-import { useAuth } from "../../provider/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { createOrderApiClient } from "../../apiHelper/OrderApiFetch";
+import type { AuthProps, LoadProps } from "../../type/types";
 
-interface ProductType {
+type ProductType = {
   id: string | null;
   name: string;
   price: number;
   quantity: number;
   imageUrl: string;
-  imageBytes: string;
-}
+  imageBytes: string | null;
+};
 
-function Product() {
+interface ProductProps extends LoadProps, AuthProps {}
+
+function Product({ auth, load }: ProductProps) {
   const initialProduct: ProductType = {
     id: null,
     name: "",
@@ -23,26 +25,22 @@ function Product() {
     imageBytes: "",
   };
   const [products, setProducts] = useState<ProductType[]>([]);
-  const auth = useAuth();
   const imageInputRef = useRef<HTMLInputElement>(null);
   const [addRotated, setAddRotated] = useState<boolean>(false);
-  const [onLoading, setOnLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const [addProduct, setAddProduct] = useState<ProductType>(initialProduct);
 
-  const api = createOrderApiClient(auth);
+  const api = createOrderApiClient(auth, load);
 
   async function fetchProducts() {
-    try {
-      const productsRes = await api.get("/product");
-      const product_data = await productsRes.json();
-      setProducts(product_data.products);
-      auth.productIn(product_data.opCsrfToken);
-      setOnLoading(false);
-    } catch (e) {
-      console.error("Failed to fetch JWT token:", e);
-    }
+    const productsRes = await api.get("/product");
+    const product_data = await productsRes.json();
+    setProducts(product_data.products);
   }
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   const onAddProduct = () => {
     async function fetchAddProducts() {
@@ -125,60 +123,38 @@ function Product() {
     }
   };
 
-  useEffect(() => {
-    if (auth.isAuth) {
-      setOnLoading(true);
-      fetchProducts();
-    } else {
-      navigate("/");
-    }
-  }, []);
-
   return (
-    <>
-      <div className="product_wrapper">
-        {onLoading && (
-          <div className="loading_wrapper">
-            <img
-              src="https://assets-v2.lottiefiles.com/a/91cc0ece-1150-11ee-b7cb-d3afb5c0c001/QNF78Uk4YE.gif"
-              alt=""
-            />
-          </div>
-        )}
+    <div className="product_wrapper">
+      <div className="products">
+        {products.map((product) => (
+          <div className="product" key={product.id}>
+            <div className="quantity">
+              <span>{product.quantity} шт.</span>
+            </div>
 
-        {!onLoading && (
-          <div className="products">
-            {products.map((product) => (
-              <div className="product" key={product.id}>
-                <div className="quantity">
-                  <span>{product.quantity} шт.</span>
-                </div>
+            <div className="img_card">
+              <img src={product.imageUrl} alt={product.name} />
+            </div>
 
-                <div className="img_card">
-                  <img src={product.imageUrl} alt="" />
-                </div>
-
-                <div className="info">
-                  <div className="title">
-                    <span>{product.name}</span>
-                  </div>
-                  <div className="price">
-                    <span>{product.price}$</span>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => onDeleteProduct(product.id)}
-                  className="delete_button"
-                >
-                  Удалить
-                </button>
+            <div className="info">
+              <div className="title">
+                <span>{product.name}</span>
               </div>
-            ))}
-          </div>
-        )}
+              <div className="price">
+                <span>{product.price}$</span>
+              </div>
+            </div>
 
-        <button onClick={onShowAddForm} className="add_button">
+            <button
+              onClick={() => onDeleteProduct(product.id)}
+              className="delete_button"
+            >
+              Удалить
+            </button>
+          </div>
+        ))}
+      </div>
+      <button onClick={onShowAddForm} className="add_button">
           <div className="button_text">
             <span>Добавить продукт</span>
           </div>
@@ -223,8 +199,7 @@ function Product() {
             <button onClick={onAddProduct}>Добавить</button>
           </div>
         )}
-      </div>
-    </>
+    </div>
   );
 }
 

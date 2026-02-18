@@ -3,27 +3,28 @@ import "./App.css";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import Main from "./components/Main/Main";
-import { BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { useAuth } from "./provider/AuthProvider";
+import { useLoad } from "./provider/LoadingProvider";
 
 function App() {
   const [showLogout, setShowLogout] = useState(false);
-  const { isAuth } = useAuth();
-  
+  const auth = useAuth();
+  const load = useLoad();
+
   useEffect(() => {
-    if(isAuth){
-      setShowLogout(true)
+    if (auth.isAuth) {
+      setShowLogout(true);
+    } else {
+      setShowLogout(false);
     }
-    else{
-      setShowLogout(false)
-    }
-  }, [isAuth])
+  }, [auth.isAuth]);
 
   return (
     <>
       <BrowserRouter>
-        <Header setShowLogout={setShowLogout} showLogout={showLogout}></Header>
-        <Main setShowLogout={setShowLogout}></Main>
+        <Header auth={auth} load={load} setShowLogout={setShowLogout} showLogout={showLogout}></Header>
+        <Main auth={auth} load={load} setShowLogout={setShowLogout}></Main>
         <Footer></Footer>
       </BrowserRouter>
     </>

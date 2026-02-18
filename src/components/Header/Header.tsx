@@ -1,17 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../provider/AuthProvider";
 import "./Header.scss";
 import { createLoginApiClient } from "../../apiHelper/LoginApiFetch";
+import type { AuthProps, LoadProps } from "../../type/types";
 
-interface HeaderProps {
+interface HeaderProps extends LoadProps, AuthProps {
   showLogout: boolean;
   setShowLogout: (value: boolean) => void;
-}
+} 
 
-function Header({ showLogout, setShowLogout }: HeaderProps) {
-  const auth = useAuth();
+function Header({ showLogout, setShowLogout , auth, load }: HeaderProps) {
+ 
   const navigate = useNavigate();
-  const api = createLoginApiClient(auth);
+  const api = createLoginApiClient(auth, load);
 
   const onLogout = () => {
     async function fetchLogout() {

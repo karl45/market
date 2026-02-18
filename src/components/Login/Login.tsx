@@ -3,6 +3,7 @@ import "./Login.scss";
 import { useAuth } from "../../provider/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { createLoginApiClient } from "../../apiHelper/LoginApiFetch";
+import { useLoad } from "../../provider/LoadingProvider";
 
 interface LoginProps {
   setShowLogout: (value: boolean) => void;
@@ -12,6 +13,7 @@ function Login({ setShowLogout }: LoginProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const auth = useAuth();
+  const load = useLoad();
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
@@ -23,7 +25,7 @@ function Login({ setShowLogout }: LoginProps) {
     setPassword(e.target.value);
   };
 
-  const api = createLoginApiClient(auth)
+  const api = createLoginApiClient(auth, load)
 
   const onAuth = async () => {
     async function fetchLogin() {
@@ -53,12 +55,9 @@ function Login({ setShowLogout }: LoginProps) {
           return;
         }
         const csrf = await update_csrf.json();
-
-
         auth.login({
           lpCsrfToken: csrf.csrfToken,
         });
-        
         navigate("/products");
         setShowLogout(true);
       } catch (e) {
@@ -69,8 +68,8 @@ function Login({ setShowLogout }: LoginProps) {
   };
 
   return (
-    <>
       <div className="auth-form-block">
+        <h2>Авторизация</h2>
         <div className="inputField">
           <span>Username:</span>
           <input onChange={onChangeEmail} type="email" />
@@ -88,8 +87,8 @@ function Login({ setShowLogout }: LoginProps) {
             <span>{error}</span>
           </div>
         )}
+
       </div>
-    </>
   );
 }
 

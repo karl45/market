@@ -1,44 +1,63 @@
-.auth-form-block{
-    width: 100%;
+@keyframes occur {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+
+.auth-form-block {
+  animation: occur 1s ease;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 10px;
+  border: 1px solid rgb(194, 189, 189);
+  box-shadow: 0 0 10px rgb(46, 45, 45);
+  .inputField {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    gap: 20px;
-    .inputField{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        input{
-            width: 30%;
-            height: 3vh;
-            font-size: large;
-            border-radius: 10px;
-            padding-inline-start: 10px;
-            border-color: black;
-        }
-
+    align-items: center;
+    width: 100%;
+    input {
+      width: 50%;
+      height: 3vh;
+      font-size: large;
+      border-radius: 10px;
+      padding-inline-start: 10px;
+      border: none;
+      border: 1px solid green;
+      box-shadow: 0 0 5px rgb(98, 114, 91);
+      &:focus {
+        outline: none;
+      }
     }
+  }
 
-    .buttonField{
-        button{
-            border: 1px solid black;
-            &:hover{
-                border: 1px solid white;
-                color: white;
-                background-color: black;
-            }
-        }
-
+  .buttonField {
+    button {
+      border: 1px solid green;
+      color: green;
+      &:hover {
+        border: 1px solid white;
+        color: white;
+        background-color: green;
+      }
     }
+  }
 
-    .error_section{
-        color: red;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
-    }
+  .error_section {
+    color: red;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
 }
