@@ -6,7 +6,6 @@ import {
   useState,
   type PropsWithChildren,
 } from "react";
-import { API_URL } from "../api";
 import type { AuthContextType, LoginContextType } from "../type/types";
 
 
@@ -22,22 +21,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     setIsAuth(true);
   };
 
-  const refreshAccessToken = async (): Promise<string> => {
-    const res = await fetch(`${API_URL}/refresh`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    });
-
-    if (!res.ok) {
-      logout();
-      throw new Error("Refresh failed");
-    }
-
-    const data = await res.json();
-    setIsAuth(true);
-    return data.accessToken;
-  };
 
   const productIn = (opCsrfToken: string) => {
     opCsrfRef.current = opCsrfToken;
@@ -60,7 +43,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       logout,
       getlpCsrfToken,
       getopCsrfToken,
-      refreshAccessToken,
     }),
     [isAuth],
   );

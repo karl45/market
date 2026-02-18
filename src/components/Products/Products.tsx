@@ -13,9 +13,9 @@ type ProductType = {
   imageBytes: string | null;
 };
 
-interface ProductProps extends LoadProps, AuthProps {}
+interface ProductProps extends AuthProps {}
 
-function Product({ auth, load }: ProductProps) {
+function Product({ auth }: ProductProps) {
   const initialProduct: ProductType = {
     id: null,
     name: "",
@@ -27,10 +27,9 @@ function Product({ auth, load }: ProductProps) {
   const [products, setProducts] = useState<ProductType[]>([]);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const [addRotated, setAddRotated] = useState<boolean>(false);
-  const navigate = useNavigate();
   const [addProduct, setAddProduct] = useState<ProductType>(initialProduct);
 
-  const api = createOrderApiClient(auth, load);
+  const api = createOrderApiClient(auth);
 
   async function fetchProducts() {
     const productsRes = await api.get("/product");

@@ -14,7 +14,6 @@ export type AuthContextType = {
   isAuth: boolean | null;
   getlpCsrfToken: () => string | null;
   getopCsrfToken: () => string | null;
-  refreshAccessToken: () => Promise<string>;
 };
 
 export interface LoadProps {

@@ -20,6 +20,10 @@
   padding: 10px;
   border: 1px solid rgb(194, 189, 189);
   box-shadow: 0 0 10px rgb(46, 45, 45);
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Maple_leaf_--_NDP.svg/250px-Maple_leaf_--_NDP.svg.png"), url("https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Maple_leaf_--_NDP.svg/250px-Maple_leaf_--_NDP.svg.png"), url("https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Maple_leaf_--_NDP.svg/250px-Maple_leaf_--_NDP.svg.png"), url("https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Maple_leaf_--_NDP.svg/250px-Maple_leaf_--_NDP.svg.png");
+  background-repeat: no-repeat;
+  background-position: bottom left, top left, top right, bottom right;
+  background-size: 10%;
   .inputField {
     display: flex;
     flex-direction: column;

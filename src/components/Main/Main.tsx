@@ -12,7 +12,7 @@ interface MainProps extends LoadProps, AuthProps {
 
 function Main({ setShowLogout, auth, load }: MainProps) {
   const navigate = useNavigate();
-  const api = createLoginApiClient(auth, load);
+  const api = createLoginApiClient(auth);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -45,11 +45,11 @@ function Main({ setShowLogout, auth, load }: MainProps) {
   }, [auth.isAuth]);
 
   return (
-    <div className="main">
+    <div className={`main${!auth.isAuth ? ' state1' : ''}`}>
       {load.getLoading() && (
         <div className="global_loading_wrapper">
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTu1tHazu6pQAkaHEZaNkssmnPvMaEukaMtRQ&s"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Maple_leaf_--_NDP.svg/250px-Maple_leaf_--_NDP.svg.png"
             alt=""
           />
         </div>
@@ -59,7 +59,7 @@ function Main({ setShowLogout, auth, load }: MainProps) {
           <Route path="/" element={<Login auth={auth} load={load} setShowLogout={setShowLogout} />} />
           <Route
             path="/products"
-            element={<Product auth={auth} load={load} />}
+            element={<Product auth={auth} />}
           />
         </Routes>
       )}

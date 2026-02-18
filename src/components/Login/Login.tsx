@@ -22,7 +22,7 @@ function Login({ setShowLogout, auth, load }: LoginProps) {
     setPassword(e.target.value);
   };
 
-  const api = createLoginApiClient(auth, load);
+  const api = createLoginApiClient(auth);
 
   const onAuth = async () => {
     async function fetchLogin() {

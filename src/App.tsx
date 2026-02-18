@@ -25,7 +25,7 @@ function App() {
       <BrowserRouter>
         <Header auth={auth} load={load} setShowLogout={setShowLogout} showLogout={showLogout}></Header>
         <Main auth={auth} load={load} setShowLogout={setShowLogout}></Main>
-        <Footer></Footer>
+        {/* <Footer></Footer> */}
       </BrowserRouter>
     </>
   );

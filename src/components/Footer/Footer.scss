@@ -1,10 +1,20 @@
-.footer{
-    background-color: red;
-    flex: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .copyRight{
-        color: white;
-    }
+.footer {
+  min-height: 60px;
+  height: 100vh;
+  background-image: url("https://img.freepik.com/free-vector/autumn-background_23-2149054410.jpg");
+  .black-box {
+    opacity: 0.76;
+    background-color: black;
+    position: absolute;
+    width: 100%;
+    height: calc(100vh - (100vh - 60px));
+  }
+  flex: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .copyRight {
+    color: white;
+    position: relative;
+  }
 }

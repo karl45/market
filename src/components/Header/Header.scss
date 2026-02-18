@@ -17,13 +17,18 @@
 }
 
 .head {
-  background-color: green;
+  background-color: #0065A2;
   flex: 0;
   min-height: 60px;
   display: flex;
   align-items: center;
+  height: 100vh;
   justify-content: space-between;
   .left_head {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
     .title {
       color: white;
     }
@@ -36,7 +41,7 @@
       &.fadeIn {
         animation: fadeIn 0.5s forwards;
       }
-      &.fadeOut{
+      &.fadeOut {
         animation: fadeOut 0.5s forwards;
       }
     }
