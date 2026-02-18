@@ -52,10 +52,13 @@ function Login({ setShowLogout }: LoginProps) {
           console.error("The CSRF was not created.");
           return;
         }
-        const csrfj = await update_csrf.json();
+        const csrf = await update_csrf.json();
+
+
         auth.login({
-          lpCsrfToken: csrfj.token,
+          lpCsrfToken: csrf.csrfToken,
         });
+        
         navigate("/products");
         setShowLogout(true);
       } catch (e) {

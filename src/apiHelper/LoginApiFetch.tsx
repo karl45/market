@@ -11,11 +11,13 @@ export function createLoginApiClient(auth: ReturnType<typeof useAuth>) {
     body?: unknown,
   ): Promise<Response> => {
     const lpCsrfToken = auth.getlpCsrfToken();
+    console.log(lpCsrfToken);
     const res = await fetch(`${API_URL}${url}`, {
       method,
       credentials: "include",
       headers: {
         ...(body ? { "Content-Type": "application/json" } : {}),
+        ...(lpCsrfToken ? { "LP-CSRF-TOKEN": lpCsrfToken } : {}),
       },
       body: body ? JSON.stringify(body) : undefined,
     });
