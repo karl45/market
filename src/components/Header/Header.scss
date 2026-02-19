@@ -17,18 +17,15 @@
 }
 
 .head {
-  background-color: #0065A2;
-  flex: 0;
+  background-color: #0065a2;
   min-height: 60px;
   display: flex;
   align-items: center;
-  height: 100vh;
   justify-content: space-between;
   .left_head {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
     .title {
       color: white;
     }
@@ -38,6 +35,21 @@
     margin-right: 20px;
     .logout {
       transition: opacity 0.5s ease-in-out;
+      border: 1px solid white;
+      background-color: #0065a2;
+      width: 60px;
+      height: 60px;
+      &:hover {
+        border: 1px solid #0065a2;
+        background-color: white;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        position: relative;
+        z-index: 1;
+      }
       &.fadeIn {
         animation: fadeIn 0.5s forwards;
       }

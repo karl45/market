@@ -2,15 +2,29 @@ import { useNavigate } from "react-router-dom";
 import "./Header.scss";
 import { createLoginApiClient } from "../../apiHelper/LoginApiFetch";
 import type { AuthProps, LoadProps } from "../../type/types";
+import { useState } from "react";
 
 interface HeaderProps extends LoadProps, AuthProps {
-  showLogout: boolean;
-  setShowLogout: (value: boolean) => void;
+  showProfileSection: boolean;
+  setShowProfileSection: (value: boolean) => void;
 }
 
-function Header({ showLogout, setShowLogout, auth, load }: HeaderProps) {
+function Header({ showProfileSection, setShowProfileSection, auth, load }: HeaderProps) {
   const navigate = useNavigate();
   const api = createLoginApiClient(auth);
+
+  const [logoutLogoUrl, setLogoutLogoUrl] = useState("https://img.icons8.com/?size=100&id=2445&format=png&color=FFFFFF");
+  const useHoverOn = () => {
+    setLogoutLogoUrl(
+      "https://img.icons8.com/?size=100&id=8119&format=png&color=0065a2",
+    );
+  };
+
+  const useHoverOff = () => {
+    setLogoutLogoUrl(
+      "https://img.icons8.com/?size=100&id=2445&format=png&color=FFFFFF",
+    );
+  };
 
   const onLogout = () => {
     async function fetchLogout() {
@@ -23,7 +37,7 @@ function Header({ showLogout, setShowLogout, auth, load }: HeaderProps) {
         } else {
           load.loaded();
           auth.logout();
-          setShowLogout(false);
+          setShowProfileSection(false);
           navigate("/");
         }
       } catch (e) {
@@ -42,13 +56,16 @@ function Header({ showLogout, setShowLogout, auth, load }: HeaderProps) {
           <h2 className="title">School Market</h2>
         </div>
         <div className="right_head">
-          {showLogout && (
+          {showProfileSection && (
             <button
+              onMouseEnter={useHoverOn}
+              onMouseLeave={useHoverOff}
               onClick={onLogout}
-              className={`logout ${showLogout ? "fadeIn" : "fadeOut"} `}
+              className={`logout ${showProfileSection ? "fadeIn" : "fadeOut"} `}
             >
-              Logout
+              <img src={logoutLogoUrl} alt="" />
             </button>
+
           )}
         </div>
       </div>

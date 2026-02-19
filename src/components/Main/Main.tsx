@@ -7,10 +7,10 @@ import { createLoginApiClient } from "../../apiHelper/LoginApiFetch";
 import type { AuthProps, LoadProps } from "../../type/types";
 
 interface MainProps extends LoadProps, AuthProps {
-  setShowLogout: (value: boolean) => void;
+  setShowProfileSection: (value: boolean) => void;
 }
 
-function Main({ setShowLogout, auth, load }: MainProps) {
+function Main({ setShowProfileSection, auth, load }: MainProps) {
   const navigate = useNavigate();
   const api = createLoginApiClient(auth);
 
@@ -56,7 +56,7 @@ function Main({ setShowLogout, auth, load }: MainProps) {
       )}
       {!load.getLoading() && (
         <Routes>
-          <Route path="/" element={<Login auth={auth} load={load} setShowLogout={setShowLogout} />} />
+          <Route path="/" element={<Login auth={auth} load={load} setShowLogout={setShowProfileSection} />} />
           <Route
             path="/products"
             element={<Product auth={auth} />}
